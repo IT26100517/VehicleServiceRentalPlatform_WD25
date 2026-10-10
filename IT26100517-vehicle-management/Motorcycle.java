@@ -6,11 +6,7 @@ import java.util.List;
 import com.vehiclerental.common.RequestData;
 import com.vehiclerental.common.ValidationException;
 
-/**
- * MEMBER 2 - A motorcycle or scooter.
- * Pricing rule: daily rate x days, plus Rs. 150 per day if a helmet is not included,
- * with 5 % off for 3 days or more.
- */
+
 public class Motorcycle extends Vehicle {
 
     public static final String TYPE = "MOTORCYCLE";
