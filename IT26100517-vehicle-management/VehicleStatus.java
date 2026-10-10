@@ -1,9 +1,6 @@
 package com.vehiclerental.vehicle;
 
-/**
- * MEMBER 2 - The only allowed states of a vehicle.
- * An enum is a special class with a fixed set of objects, each with its own label.
- */
+
 public enum VehicleStatus {
 
     AVAILABLE("Available"),
@@ -12,7 +9,7 @@ public enum VehicleStatus {
 
     private final String label;
 
-    VehicleStatus(String label) {           // enum constructor
+    VehicleStatus(String label) {       
         this.label = label;
     }
 
@@ -20,7 +17,7 @@ public enum VehicleStatus {
         return label;
     }
 
-    /** Converts user text such as "rented" into VehicleStatus.RENTED. */
+  
     public static VehicleStatus fromText(String text) {
         for (VehicleStatus s : values()) {
             if (s.name().equalsIgnoreCase(text)) {
