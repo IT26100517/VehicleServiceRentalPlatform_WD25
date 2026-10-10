@@ -19,18 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.vehiclerental.common.RequestData;
 
-/**
- * MEMBER 2 - REST endpoints used by the vehicle pages.
- *
- *  POST   /api/vehicles                    add vehicle      (Create)
- *  GET    /api/vehicles?q=&type=&status=   search / list    (Read)
- *  GET    /api/vehicles/{id}               one vehicle      (Read)
- *  GET    /api/vehicles/{id}/quote?days=   price quote      (Read - polymorphic pricing)
- *  GET    /api/vehicles/stats              fleet numbers    (Read)
- *  PUT    /api/vehicles/{id}               edit vehicle     (Update)
- *  PATCH  /api/vehicles/{id}/status        change status    (Update)
- *  DELETE /api/vehicles/{id}               remove vehicle   (Delete)
- */
+
 @RestController
 @RequestMapping("/api/vehicles")
 public class VehicleController {
