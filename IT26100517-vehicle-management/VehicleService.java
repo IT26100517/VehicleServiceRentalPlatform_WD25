@@ -13,15 +13,6 @@ import com.vehiclerental.common.RequestData;
 import com.vehiclerental.common.ResourceNotFoundException;
 import com.vehiclerental.common.ValidationException;
 
-/**
- * MEMBER 2 - Business logic + file handling for the fleet (vehicles.txt).
- *
- * Lecture concepts:
- *  - ArrayList&lt;Vehicle&gt; holds Car, Van and Motorcycle objects together (polymorphism through the parent type).
- *  - Overloaded constructors of Car/Van/Motorcycle are used when a new vehicle is added.
- *  - Open/Closed principle (SOLID): adding a new type (e.g. Truck) only needs a new child class and
- *    one line in build(); search, update and delete code stay unchanged.
- */
 @Service
 public class VehicleService {
 
@@ -38,7 +29,7 @@ public class VehicleService {
         }
     }
 
-    // ------------------------------------------------------------------ CREATE
+  
 
     public synchronized Vehicle add(RequestData data) {
         String plate = data.getString("plateNumber").toUpperCase().replace(' ', '-');
@@ -51,7 +42,7 @@ public class VehicleService {
         return vehicle;
     }
 
-    /** Creates the right child object with its overloaded constructor. */
+ 
     private Vehicle build(String type, String id, RequestData d, String plate) {
         String brand = d.getString("brand");
         String model = d.getString("model");
@@ -77,7 +68,7 @@ public class VehicleService {
         }
     }
 
-    // ------------------------------------------------------------------ READ
+  
 
     public synchronized List<Vehicle> getAll() {
         return new ArrayList<>(vehicles);
@@ -92,10 +83,6 @@ public class VehicleService {
         throw new ResourceNotFoundException("Vehicle", id);
     }
 
-    /**
-     * Search by free text (brand, model, plate), type, status, branch and maximum daily rate.
-     * Any filter that is null/empty is ignored.
-     */
     public synchronized List<Vehicle> search(String q, String type, String status, String branchId, Double maxRate) {
         ArrayList<Vehicle> result = new ArrayList<>();
         String text = q == null ? "" : q.trim().toLowerCase();
@@ -134,7 +121,7 @@ public class VehicleService {
         return map;
     }
 
-    // ------------------------------------------------------------------ UPDATE
+
 
     public synchronized Vehicle update(String id, RequestData data) {
         Vehicle v = findById(id);
@@ -149,7 +136,7 @@ public class VehicleService {
         v.setDailyRate(data.getDouble("dailyRate", v.getDailyRate()));
         int newMileage = data.getInt("mileage", v.getMileage());
         if (newMileage < v.getMileage()) {
-            // correcting mileage is allowed, but only by an explicit flag
+       
             if (!data.getBoolean("correctMileage", false)) {
                 throw new ValidationException("New mileage is lower than the current reading. Tick 'correct mileage' to fix a mistake.");
             }
@@ -158,18 +145,18 @@ public class VehicleService {
         v.setBranchId(data.getString("branchId", v.getBranchId()));
         v.setColour(data.getString("colour", v.getColour()));
         v.setFuelType(data.getString("fuelType", v.getFuelType()));
-        if (data.contains("imageUrl")) {                     // empty value = remove the photo
+        if (data.contains("imageUrl")) {
             v.setImageUrl(data.getString("imageUrl", ""));
         }
         if (data.has("status")) {
             v.setStatus(VehicleStatus.fromText(data.getString("status")));
         }
-        v.applyTypeDetails(data);          // child class updates its own extra fields (polymorphism)
+        v.applyTypeDetails(data);         
         save();
         return v;
     }
 
-    /** Called by the booking module when a vehicle is rented / returned. */
+
     public synchronized Vehicle updateStatus(String id, VehicleStatus status) {
         Vehicle v = findById(id);
         v.setStatus(status);
@@ -177,15 +164,14 @@ public class VehicleService {
         return v;
     }
 
-    /** Adds kilometres driven during a rental (used when a vehicle is returned). */
+
     public synchronized void addMileage(String id, int km) {
         Vehicle v = findById(id);
         v.setMileage(v.getMileage() + Math.max(0, km));
         save();
     }
 
-    // ------------------------------------------------------------------ DELETE
-
+   
     public synchronized void delete(String id) {
         Vehicle v = findById(id);
         if (v.getStatus() == VehicleStatus.RENTED) {
@@ -195,7 +181,7 @@ public class VehicleService {
         save();
     }
 
-    // ------------------------------------------------------------------ statistics
+  
 
     public synchronized Map<String, Object> getStats() {
         Map<String, Object> stats = new LinkedHashMap<>();
@@ -214,8 +200,7 @@ public class VehicleService {
         return stats;
     }
 
-    // ------------------------------------------------------------------ helpers
-
+  
     private void ensurePlateUnique(String ignoreId, String plate) {
         for (Vehicle v : vehicles) {
             if (!v.getId().equals(ignoreId) && v.getPlateNumber().equalsIgnoreCase(plate)) {
