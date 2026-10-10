@@ -6,10 +6,7 @@ import java.util.List;
 import com.vehiclerental.common.RequestData;
 import com.vehiclerental.common.ValidationException;
 
-/**
- * MEMBER 2 - A van for groups or cargo.
- * Pricing rule: daily rate x days + a one-time cleaning fee of Rs. 2,000.
- */
+
 public class Van extends Vehicle {
 
     public static final String TYPE = "VAN";
