@@ -6,17 +6,14 @@ import java.util.List;
 import com.vehiclerental.common.RequestData;
 import com.vehiclerental.common.ValidationException;
 
-/**
- * MEMBER 2 - A car (sedan, hatchback, SUV ...).
- * Pricing rule: daily rate x days, with 10 % off for rentals of 7 days or more.
- */
+
 public class Car extends Vehicle {
 
     public static final String TYPE = "CAR";
     private static final double WEEKLY_DISCOUNT = 0.10;
 
     private int seats;
-    private String transmission;   // Automatic / Manual
+    private String transmission;   
 
     public Car() {
         super();
